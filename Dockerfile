@@ -50,9 +50,6 @@ RUN INSTALL_PKGS="python3 python3-devel python3-setuptools python3-pip python3-v
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH.
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
 
-# Copy extra files to the image.
-COPY ./root/ /
-
 # - Create a Python virtual environment for use by any application to avoid
 #   potential conflicts with Python packages preinstalled in the main Python
 #   installation.
