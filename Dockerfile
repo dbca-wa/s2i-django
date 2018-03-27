@@ -1,6 +1,5 @@
-# This image provides a Python 3.6 environment you can use to run your Python
-# applications.
 FROM registry.fedoraproject.org/f27/s2i-base:latest
+MAINTAINER ASI <asi@dbca.wa.gov.au>
 
 EXPOSE 8080
 
@@ -10,39 +9,32 @@ ENV PYTHON_VERSION=3.6 \
     PYTHONIOENCODING=UTF-8 \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
-    PIP_NO_CACHE_DIR=off
-
-ENV NAME=python3 \
+    PIP_NO_CACHE_DIR=off \
+    NAME=python3 \
     VERSION=0 \
     RELEASE=1 \
-    ARCH=x86_64
-
-ENV SUMMARY="Platform for building and running Python $PYTHON_VERSION applications" \
+    ARCH=x86_64 \
+    SUMMARY="Platform for building and running Python $PYTHON_VERSION applications" \
     DESCRIPTION="Python $PYTHON_VERSION available as docker container is a base platform for \
 building and running various Python $PYTHON_VERSION applications and frameworks. \
-Python is an easy to learn, powerful programming language. It has efficient high-level \
-data structures and a simple but effective approach to object-oriented programming. \
-Python's elegant syntax and dynamic typing, together with its interpreted nature, \
-make it an ideal language for scripting and rapid application development in many areas \
-on most platforms."
+Includes an installed version of GDAL to allow spatial data processing."
 
 LABEL summary="$SUMMARY" \
-      description="$DESCRIPTION" \
-      io.k8s.description="$DESCRIPTION" \
-      io.k8s.display-name="Python 3.6" \
-      io.openshift.expose-services="8080:http" \
-      io.openshift.tags="builder,python,python36,rh-python36" \
-      com.redhat.component="$NAME" \
-      name="$FGC/$NAME" \
-      version="$VERSION" \
-      release="$RELEASE.$DISTTAG" \
-      architecture="$ARCH" \
-      usage="s2i build https://github.com/dbca-wa/s2i-django.git --context-dir=3.6/test/setup-test-app/ $FGC/$NAME python-sample-app" \
-      maintainer="SoftwareCollections.org <sclorg@redhat.com>"
+    description="$DESCRIPTION" \
+    io.k8s.description="$DESCRIPTION" \
+    io.k8s.display-name="Python 3.6" \
+    io.openshift.expose-services="8080:http" \
+    io.openshift.tags="builder,python,python36,rh-python36,gdal" \
+    com.redhat.component="$NAME" \
+    name="$FGC/$NAME" \
+    version="$VERSION" \
+    release="$RELEASE.$DISTTAG" \
+    architecture="$ARCH" \
+    usage="s2i build https://github.com/dbca-wa/s2i-django.git --context-dir=test/setup-test-app/ $FGC/$NAME python-sample-app"
 
 RUN INSTALL_PKGS="python3 python3-devel python3-setuptools python3-pip python3-virtualenv \
-	 nss_wrapper httpd httpd-devel atlas-devel gcc-gfortran libffi-devel libtool-ltdl \
-	 enchant gdal gdal-devel" && \
+    nss_wrapper httpd httpd-devel atlas-devel gcc-gfortran libffi-devel libtool-ltdl \
+    enchant gdal gdal-devel rsync" && \
     dnf install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     dnf clean all -y
