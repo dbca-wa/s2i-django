@@ -7,10 +7,3 @@ services:
 
 install:
  - docker build . -t dbcawa/s2i-django:${TRAVIS_BRANCH}
- - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-
-deploy:
-  provider: script
-  script: docker push dbcawa/s2i-django
-  on:
-    all_branches: true
