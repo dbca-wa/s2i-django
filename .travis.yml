@@ -1,9 +1,0 @@
-sudo: required
-language: python
-python:
-  - "3.6"
-services:
-  - docker
-
-install:
- - docker build . -t dbcawa/s2i-django:${TRAVIS_BRANCH}
