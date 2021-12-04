@@ -1,10 +1,10 @@
 psycopg2==2.7.4
-Django==2.0.3
+Django==2.2.24
 django-confy==1.0.4
 django-extensions==2.0.6
 uWSGI==2.0.17
 Unipath==1.1
-jinja2==2.10
+jinja2==2.11.3
 django-crispy-forms==1.7.2
 xlrd==1.1.0
 xlutils==2.0.0
